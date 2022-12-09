@@ -36,11 +36,6 @@ MyString::MyString(const char * Cstr)
     std::string strcpy(str, Cstr);
     std::cout <<"Konstruktor C-string" <<std::endl;
 }
-//    scr._size = 0;
-//    scr._lenght = 0;
-//    scr._data = nullptr;
-//}
-//
 
 MyString::~MyString()
 {
