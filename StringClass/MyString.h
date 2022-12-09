@@ -23,7 +23,7 @@ public:
 //
 private:
     std::size_t _lenght;
-    const char* str;
+    char* _str;
 //
 //
 };
