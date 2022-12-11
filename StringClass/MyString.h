@@ -8,23 +8,28 @@ class MyString
 {
 public:
     MyString();
-    MyString(const MyString& str);
-    MyString(MyString&& );
-    MyString(const char*);
+    MyString(MyString& src);
+    MyString(MyString&& per);
+    MyString(const char* Cstr);
     ~MyString();
 
-  //  std::size_t lenght();
+    std::size_t lenght();
+    const char *c_str();
 
-//
-//    void push_back(const char);
-//    char & operator[](int);
+void push_back(char);
+char & operator[](size_t(str1));
+void strcat(size_t(str1));
+
 
 //
 //
 private:
     std::size_t _lenght;
-    const char* str;
-//
+    char *str;
+    const char* Cstr;
+    char str1;
+
+    //
 //
 };
 //
