@@ -1,84 +1,97 @@
 #include "MyString.h"
 
 #include <iostream>
+#include <cstring>
 
 MyString::MyString()
     :_lenght(0)
+    , _cap(0)
+    , _mem(nullptr)
 {
-    str = new char[0];
-    str[0] = '\0';
-    std::cout << "konstruktor bez parametrov" <<std::endl;
+    _mem = new char[0];
+    _mem[0] = '\0';
+//    std::cout << "konstruktor bez parametrov" <<std::endl;
 }
 
-MyString::MyString( MyString & src)
-    : _lenght (src._lenght)
-    , str()
+MyString::MyString( MyString & copy)
+    : _lenght (copy._lenght)
+    , _cap(copy._cap)
 {
-    str = new char[_lenght + 1];                           //выделили память для "src"
-    strcpy (str, src.str);                                 //копируем "str" -> "src"
-    std::cout << "Konstruktor kopirovaniya" << std::endl;
-}
-
-
-MyString::MyString(MyString && per)
-    :_lenght(per._lenght)
-     ,str(per.str)
-{
-    per._lenght = 0;
-    per.str = nullptr;
-    std::cout <<"Konstruktor Peremesheniya" <<std::endl;
-
-}
-
-MyString::MyString(const char * Cstr)
-{
-    _lenght = strlen(Cstr);
-    str = new char [_lenght +1];
-    strcpy(str, Cstr);
-
-    std::cout <<"Konstruktor C-string"<<Cstr <<std::endl;
-
+    _mem = new char[copy._cap + 1];
+    strncpy (_mem, copy._mem, _lenght * sizeof (char));
+//    std::cout << "Konstruktor kopirovaniya" << std::endl;
 }
 
 
-
-void MyString::push_back(char)
+MyString::MyString(MyString && copy)
+    :_lenght(copy._lenght)
+    ,_cap(copy._cap)
+     ,_mem(copy._mem)
 {
-    std::string str1 = "Strin";
-    str1.push_back('g');
-
-    std::cout<<"It's Pushback Strin + g --> : "<<str1 <<std::endl;
+    copy._lenght = 0;
+    copy._cap = 0;
+    copy._mem = nullptr;
+//    std::cout <<"Konstruktor Peremesheniya" <<std::endl;
 
 }
 
-char &MyString::operator[](size_t str1)
+MyString::MyString(const char *copy)
 {
-    if(str1 < _lenght){
-        return str[str1];
+    _lenght = strlen(copy);
+    _mem = new char [_lenght +1];
+    strcpy(_mem, copy);
+
+//    std::cout<<"C-" <<copy <<std::endl;
+
+}
+
+
+
+void MyString::push_back(char ch)
+{
+    if(_cap <= _lenght) {
+        _cap = _cap * 2 + 1;
+        char* nmem = new char[_cap];
+        strncpy(nmem, _mem, _lenght * sizeof (char));
+        delete[] _mem;
+        _mem = nmem;
     }
-    return str[str1];
+    _mem[_lenght] = ch;
+    ++ _lenght;
+//    std::cout<< "MyString::" <<__FUNCTION__ <<"-->"<<ch  <<std::endl;
 }
 
-
-/*void MyString::strcat()
+const char &MyString::operator[](size_t ind)
 {
-    std::string str01 = "str";
-    std::string str2 = "in";
+    if(ind < _lenght){
+        return _mem[ind];
+}
+    return 0;
+}
 
+std::ostream &operator<<(std::ostream &outs, const MyString &copy){
+    outs << copy._mem;
+    return outs;
+}
 
-
-};*/
-
-
+void MyString::append(const MyString &copy)
+{
+    _lenght += copy._lenght;
+    char *nmem = new char[_lenght + 1];
+    std::strcpy(nmem, _mem);
+    std::strcat(nmem, copy._mem);
+    delete [] _mem;
+    _mem = nmem;
+}
 
 MyString::~MyString()
 {
-    delete[] str;
+    delete[] _mem;
 }
 
 const char* MyString::c_str()
 {
-    return str;
+    return _mem;
 }
 
 
