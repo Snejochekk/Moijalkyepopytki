@@ -21,6 +21,8 @@ public:
 void push_back(char);
 const char & operator[](size_t ind);
 
+void Iterator(MyString &copy);
+
 void append(const MyString &copy);
 friend std::ostream &operator<<(std::ostream &os, const MyString &copy);
 

@@ -75,8 +75,7 @@ void MyString::Iterator(MyString &copy)
 {
     for(auto i = 0; i < copy._lenght; ++i)
     {
-        std::cout<<copy[i];
-        std::cout <<"/n";
+        std::cout<<copy[i] <<std::endl;
     }
 }
 
