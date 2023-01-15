@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cstring>
 
+//добавить итератор for
+
 MyString::MyString()
     :_lenght(0)
     , _cap(0)
@@ -10,7 +12,7 @@ MyString::MyString()
 {
     _mem = new char[0];
     _mem[0] = '\0';
-//    std::cout << "konstruktor bez parametrov" <<std::endl;
+    std::cout << "konstruktor bez parametrov" <<std::endl;
 }
 
 MyString::MyString( MyString & copy)
@@ -19,7 +21,7 @@ MyString::MyString( MyString & copy)
 {
     _mem = new char[copy._cap + 1];
     strncpy (_mem, copy._mem, _lenght * sizeof (char));
-//    std::cout << "Konstruktor kopirovaniya" << std::endl;
+    std::cout << "Konstruktor kopirovaniya" << std::endl;
 }
 
 
@@ -31,7 +33,7 @@ MyString::MyString(MyString && copy)
     copy._lenght = 0;
     copy._cap = 0;
     copy._mem = nullptr;
-//    std::cout <<"Konstruktor Peremesheniya" <<std::endl;
+    std::cout <<"Konstruktor Peremesheniya" <<std::endl;
 
 }
 
@@ -41,7 +43,7 @@ MyString::MyString(const char *copy)
     _mem = new char [_lenght +1];
     strcpy(_mem, copy);
 
-//    std::cout<<"C-" <<copy <<std::endl;
+    std::cout<<"C-" <<copy <<std::endl;
 
 }
 
@@ -58,7 +60,7 @@ void MyString::push_back(char ch)
     }
     _mem[_lenght] = ch;
     ++ _lenght;
-//    std::cout<< "MyString::" <<__FUNCTION__ <<"-->"<<ch  <<std::endl;
+    std::cout<< "MyString::" <<__FUNCTION__ <<"-->"<<ch  <<std::endl;
 }
 
 const char &MyString::operator[](size_t ind)
@@ -69,10 +71,21 @@ const char &MyString::operator[](size_t ind)
     return 0;
 }
 
-std::ostream &operator<<(std::ostream &outs, const MyString &copy){
+void MyString::Iterator(MyString &copy)
+{
+    for(auto i = 0; i < copy._lenght; ++i)
+    {
+        std::cout<<copy[i];
+        std::cout <<"/n";
+    }
+}
+
+std::ostream &operator<<(std::ostream &outs, const MyString &copy)
+{
     outs << copy._mem;
     return outs;
 }
+
 
 void MyString::append(const MyString &copy)
 {
